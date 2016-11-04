@@ -20,7 +20,7 @@ start:
  	
 	mov AL, b		;AL = b
 	cbw			;AX = AL
-	mul c			;DX:AX = AX * c 
+	imul c			;DX:AX = AX * c 
 	mov CX, DX		;CX = DX
 	mov BX, AX		;BX = AX
 	;CX:BX = b * c
@@ -28,7 +28,7 @@ start:
 	mov AL, 2		;AL = 2	
 	cbw			;Converts byte to word
 	cwd			;Convers word to doubleword
-	div c			;AX = DX:AX / c
+	idiv c			;AX = DX:AX / c
 	;AX = 2/c
 
 	cwd			;Converts word to doubleword
