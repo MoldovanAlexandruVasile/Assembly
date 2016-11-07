@@ -32,15 +32,16 @@ start:
 	;AX = 2/c
 
 	cwd			;Converts word to doubleword
-	add CX, DX		;CX = CX + DX
 	add BX, AX		;BX = BX + AX
+	adc CX, DX		;CX = CX + DX
 	;CX:BX = b*c+2/c
 
 	mov AL, a		;AL = a
 	cbw			;Converts byte to word AL -> AX
 	cwd			;Convers word to doubleword AX -> DX:AX
-	add CX, DX		;CX = CX + DX
 	add BX, AX		;BX = BX + AX
+	adc CX, DX		;CX = CX + DX
+
 	;CX:BX = (a+b*c+2/c)
 
 	mov AL, a		;AL = a
@@ -52,12 +53,12 @@ start:
 	;DX:AX = (a+b*c+2/c)
 	;CX = (2+a) 	
 
-	div CX			;AX = DX:AX / CX
+	idiv CX			;AX = DX:AX / CX
 	;AX = (a+b*c+2/c)/(2+a)
 
 	cwd			;DX:AX = AX
-	add DX, word PTR e
-	add AX, word ptr e+2
+	add DX, word PTR e+2
+	add AX, word ptr e
 	;DX:AX = (a+b*c+2/c)/(2+a)+e
 
 	mov AX, 4c00h
