@@ -18,7 +18,7 @@ start:
 	mov DS, AX
  	
 	mov AL, a		;AL = a
-	mul a			;AX = AL * a
+	imul a			;AX = AL * a
 	cwd			;Convert word to doubleword
 	mov BX, word PTR b	;BX = 1/2 word from B
 	mov CX, word PTR b+2	;CX = the other half word from B
