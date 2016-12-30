@@ -1,3 +1,5 @@
+; The character procedure will print out on the screen the character of the current ASCII code
+
 assume CS:code, DS:data
 
 data segment public
