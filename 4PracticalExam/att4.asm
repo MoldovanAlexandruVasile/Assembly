@@ -5,13 +5,14 @@ assume DS:data, CS:code
 data segment
 
 	msg DB 'What you want to write in file: $'
+	maxSir DB 100
+	lSir DB ?
+	sir DB 100 dup (?)
 
 	msg2 DB 'File you want to write in: $'
 	maxFileName DB 12
 	lFileName DB ?
 	fileName DB 12 dup (?)
-
-	string DB 12 dup (?), '$'
 
 data ends
 
@@ -54,8 +55,8 @@ start:
 	int 21h
 	
 	;read the string
-	mov AH, 3Fh
-	mov DX, offset string
+	mov AH, 0Ah
+	mov DX, offset maxSir
 	int 21h
 
 	;open the file
@@ -66,8 +67,15 @@ start:
 
 	mov BX, AX
 
+	mov CL, lSir
+	mov CH, 0
+
 	mov AH, 40h
-	mov DX, offset string
+	mov DX, offset sir
+	int 21h
+
+	mov AH, 3Fh
+	mov DX, offset fileName
 	int 21h
 
 	call newLine
