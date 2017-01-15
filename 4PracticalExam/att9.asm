@@ -16,10 +16,14 @@ data segment
 	fileName DB 12 dup (?)
 	fileHandler DW ?
 
-	unByte DB 2 dup (?)
+	unByte DB 3 dup (?)
 
 	saispe DB 16
 	zece DB 10
+	cate DB ?
+	k DB 0
+	doi DB 2
+	space DB ' $'
 
 data ends
 
@@ -70,18 +74,26 @@ start:
 
 	mov SI, 0
 
+	mov AL, lSir
+	mov AH, 0	
+	div doi
+	sub AL, 1
+	mov cate, AL
+	mov k, 0
+
 	Repeta:
-		;we convert in hexa the number
+		;we transform STR in INT
 		mov AL, sir[SI]
 		mov BL, sir[SI + 1]
 		sub AL, '0'
 		sub BL, '0'
+		;we convert it into hexa
 		mul saispe
 		;in AL we have the result
 		add AL, BL
 		mov AH, 0
+		;Convert back into string
 		div zece
-		
 		add AL, '0'
 		add AH, '0'
 
@@ -92,10 +104,18 @@ start:
 		mov CX, 2
 		mov DX, offset unByte
 		int 21h
+
+		mov AH, 40h
+		mov CX, 1
+		mov DX, offset space
+		int 21h
 		
 		add SI, 3
-	
-		;loop Repeta
+
+		add k, 1
+		mov AL, k
+		CMP cate, AL
+		JGE Repeta
 		
 	Sfarsit:
 		mov BX, fileHandler
